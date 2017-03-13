@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title><%= title %></title>
+    <% include ../partials/header %>
+</head>
+
+<body>
+<div class="text-center">
+    <div class="welcome-message text-center">
+        <h2>Welcome {{username}}</h2>
+    </div>
+</div>
+
+<div class="container" ng-app="angularApp">
+
+    <div class="row col-md-4">
+        <label>Title:</label>
+        <input type="text" ng-model="username" placeholder="Enter a name here">
+    </div>
+
+    <div class="row"><br/></div>
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="box">
+                <div class="box-content">
+                    <h1 class="tag-title">{{username}}</h1>
+                    <hr/>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pharetra quam sollicitudin nibh
+                        aliquam finibus. Etiam efficitur felis vel imperdiet varius. Maecenas bibendum elementum
+                        molestie. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris cursus finibus semper.
+                        Fusce molestie tincidunt leo vel varius. Nam scelerisque nulla feugiat leo consequat, id
+                        dignissim sem tincidunt. Proin elit mauris, hendrerit in varius sed, facilisis sit amet
+                        neque.
+                    </p>
+                    <br/>
+                    <a href="#" class="btn btn-block btn-primary">See more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <% include ../partials/footer %>
+</div>
+
+<!-- scripts -->
+<% include ../partials/scripts %>
+</body>
+</html>
