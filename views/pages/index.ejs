@@ -1,48 +1,66 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
 <head>
     <title><%= title %></title>
     <% include ../partials/header %>
+    <script src="/javascripts/home.js"></script>
 </head>
 
 <body>
-<div class="text-center">
-    <div class="welcome-message text-center">
-        <h2>Welcome {{username}}</h2>
-    </div>
-</div>
+<div class="container col-md-12" id="containerApp" ng-app="homeModule">
+    <!-- Home Controller -->
+    <div ng-controller="HomeController" ng-init="getMovies();">
 
-<div class="container" ng-app="angularApp">
+        <div class="text-center">
+            <div class="welcome-message text-center">
+                <h2><b>LIST</b> {{username | uppercase}}</h2>
+            </div>
+        </div>
 
-    <div class="row col-md-4">
-        <label>Title:</label>
-        <input type="text" ng-model="username" placeholder="Enter a name here">
-    </div>
+        <div class="row">
+            <label>List Title: </label>
+            <input type="text" ng-model="username" placeholder="Enter a name here">
+        </div>
 
-    <div class="row"><br/></div>
+        <br/>
 
-    <div class="row">
-        <div class="col-md-4 text-center">
-            <div class="box">
-                <div class="box-content">
-                    <h1 class="tag-title">{{username}}</h1>
-                    <hr/>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pharetra quam sollicitudin nibh
-                        aliquam finibus. Etiam efficitur felis vel imperdiet varius. Maecenas bibendum elementum
-                        molestie. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris cursus finibus semper.
-                        Fusce molestie tincidunt leo vel varius. Nam scelerisque nulla feugiat leo consequat, id
-                        dignissim sem tincidunt. Proin elit mauris, hendrerit in varius sed, facilisis sit amet
-                        neque.
-                    </p>
-                    <br/>
-                    <a href="#" class="btn btn-block btn-primary">See more</a>
+        <div ng-repeat="movie in movies">
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-content">
+                        <h4 class="text-center">{{movie.Title | uppercase}}</h4>
+                        <hr/>
+                        <img align="middle" width="300" height="400" ng-src={{movie.Poster}} alt={{movie.Title}}></img>
+                        <p class="text-center"><b>{{movie.Genre}}</b></p>
+                        <br/>
+                        <p class="text-center"><i>{{movie.imdbID}}</i></p>
+                        <br/>
+                        <a href="#" class="btn btn-block btn-primary">See more</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- static data -->
+        <div class="col-md-4">
+                <div ng-repeat="product in products">
+                    <div ng-show="product.isAvailable">
+                        <label>Name: </label>
+                        <p>{{product.name | uppercase}} </p>
+
+                        <label>Price: </label>
+                        <p>{{product.price}}</p>
+
+                        <label>Description</label>
+                        <p>{{product.description}}</p>
+                    </div>
+                </div>
+        </div>
+
+    </div> <!-- HomeController -->
 
     <!-- footer -->
-    <% include ../partials/footer %>
+    <!--<% include ../partials/footer %>-->
 </div>
 
 <!-- scripts -->

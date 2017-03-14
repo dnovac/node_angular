@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
 
 router.get('/:name?', function(req, res){
 	var name = req.params.name;
-	res.render('new', {title: name});
+	res.render('pages/index', {title: name});
 });
 
 router.get('*', function(req, res){
