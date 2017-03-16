@@ -43,6 +43,14 @@ a {
     text-transform: none;
 }
 
+.ng-invalid.ng-dirty {
+    border-color: red;
+}
+
+.ng-valid.ng-dirty {
+    border-color: green;
+}
+
 footer {
     position: absolute;
     bottom: 0;

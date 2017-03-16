@@ -4,26 +4,74 @@
     <title><%= title %></title>
     <% include ../partials/header %>
     <script src="/javascripts/home.js"></script>
+    <!-- Directives -->
+    <script src="/javascripts/directives/searchPanelDirective.js"></script>
 </head>
 
 <body>
-<div class="container col-md-12" id="containerApp" ng-app="homeModule">
-    <!-- Home Controller -->
-    <div ng-controller="HomeController" ng-init="getMovies();">
+<div class="container" id="containerApp" ng-app="homeModule">
 
-        <div class="text-center">
-            <div class="welcome-message text-center">
-                <h2><b>LIST</b> {{username | uppercase}}</h2>
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Save your list</div>
+                <div class="panel-body">
+                    <!-- rate -->
+                    <div class="row col-md-12">
+                        <label>List Title: </label>
+                        <input type="text" ng-model="username" placeholder="Enter a name here">
+                    </div>
+                    <form class="form-horizontal" name="reviewForm" ng-controller="ReviewController as reviewCtrl"
+                          ng-submit="reviewForm.$valid && reviewCtrl.addReview(review)">
+                        <div class="col-md-3">
+                            <label style="width:100px !important;" for="select-review-id">Review: </label>
+                            <select style="width: 150px !important;" ng-model="reviewCtrl.review.stars"
+                                    class="form-control"
+                                    id="select-review-id">
+                                <option>1 star</option>
+                                <option>2 stars</option>
+                                <option>3 stars</option>
+                                <option>4 stars</option>
+                                <option>5 stars</option>
+                            </select>
+                        </div>
+
+                        <label>Author: </label>
+                        <input type="email" ng-model="reviewCtrl.review.author" required/>
+
+                        <label id="review-label">
+                            <b>Stars: {{reviewCtrl.review.stars}}</b>
+                        </label>
+                        <cite>by: {{reviewCtrl.review.author}}</cite>
+
+                        <div>Email author is {{reviewForm.$valid}}</div>
+                        <input type="submit" value="Submit"/>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <label>List Title: </label>
-            <input type="text" ng-model="username" placeholder="Enter a name here">
+        <div class="col-md-6">
+            <!--<search-movie></search-movie>-->
+            <div class="panel panel-default">
+                <div class="panel-heading">Search</div>
+                <div class="panel-body">
+                    <label>Search: </label>
+                    <input type="text" placeholder="Search movie title">
+                </div>
+            </div>
         </div>
 
-        <br/>
+    </div> <!-- end row -->
 
+    <!--    <div class="welcome-message text-center">
+            <h2><b>LIST</b> {{username | uppercase}}</h2>
+        </div>-->
+
+
+    <!-- Home Controller -->
+    <div ng-controller="HomeController" ng-init="getMovies();">
         <div ng-repeat="movie in movies">
             <div class="col-md-4">
                 <div class="box">
@@ -43,18 +91,18 @@
 
         <!-- static data -->
         <div class="col-md-4">
-                <div ng-repeat="product in products">
-                    <div ng-show="product.isAvailable">
-                        <label>Name: </label>
-                        <p>{{product.name | uppercase}} </p>
+            <div ng-repeat="product in products">
+                <div ng-show="product.isAvailable">
+                    <label>Name: </label>
+                    <p>{{product.name | uppercase}} </p>
 
-                        <label>Price: </label>
-                        <p>{{product.price}}</p>
+                    <label>Price: </label>
+                    <p>{{product.price}}</p>
 
-                        <label>Description</label>
-                        <p>{{product.description}}</p>
-                    </div>
+                    <label>Description</label>
+                    <p>{{product.description}}</p>
                 </div>
+            </div>
         </div>
 
     </div> <!-- HomeController -->
