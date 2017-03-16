@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/'));
 app.use('/angular', express.static(__dirname + '/node_modules/angular/'));
+app.use('/font-awesome', express.static(__dirname + '/node_modules/font-awesome/'));
 
 //routes
 app.use('/', routes);

@@ -10,14 +10,15 @@ homeModule.controller('HomeController', function ($scope, $http) {
     $scope.searchTitle = '';
 
     $scope.getMovies = function () {
-        $http({
+        /*$http({
             method: 'GET',
             url: "http://www.omdbapi.com/?s=Star+Wars&plot=short&r=json"
         }).then(function (result) {
             $scope.movies = result.data.Search;
         }).catch(function (error) {
             console.log(JSON.stringify(error));
-        });
+        });*/
+        console.log("Home Controller: getMovies()")
     };
 
     $scope.search = function (searchText) {
