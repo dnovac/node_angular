@@ -2,39 +2,50 @@
  * Created by dnovac on 14.03.2017.
  */
 
-var homeModule = angular.module("homeModule",['searchMovieModule']);
+var homeModule = angular.module("homeModule", []);
 
-homeModule.controller('HomeController', function($scope, $http){
-    $scope.products = data;
+homeModule.controller('HomeController', function ($scope, $http) {
     $scope.movies = [];
     $scope.reviews = [];
+    $scope.searchTitle = '';
 
- /*   $scope.logToConsole = function () {
-     console.log("Home Controller");
-     }*/
-
-    $scope.getMovies = function($http) {
+    $scope.getMovies = function () {
         $http({
             method: 'GET',
             url: "http://www.omdbapi.com/?s=Star+Wars&plot=short&r=json"
-        }).then(function(result){
+        }).then(function (result) {
             $scope.movies = result.data.Search;
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.log(JSON.stringify(error));
         });
-    }
+    };
+
+    $scope.search = function (searchText) {
+
+        $http({
+            method: 'GET',
+            url: "http://www.omdbapi.com/?s=" + searchText + "&plot=short&r=json"
+        }).then(function (result) {
+            $scope.movies = result.data.Search;
+        }).catch(function (error) {
+            console.log(JSON.stringify(error));
+        });
+
+    };
 });
 
-homeModule.controller('ReviewController', function($scope) {
-   $scope.review = {};
+homeModule.controller('ReviewController', function ($scope) {
+    console.log("Review Controller init...");
+    $scope.review = {};
+    $scope.products = data;
 
-   $scope.addReview = function(listReview) {
-       alert("Submited Review");
-       listReview.reviews.push($scope.review);
-       $scope.review = {};
-   };
+    $scope.addReview = function (listReview) {
+        listReview.reviews.push($scope.review);
+        $scope.review = {};
+    };
 });
 
+//static
 var data = [
     {
         name: 'Cheese',

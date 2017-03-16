@@ -11,8 +11,7 @@
 <body>
 <div class="container" id="containerApp" ng-app="homeModule">
 
-    <div class="row">
-
+    <div class="row" ng-controller="ReviewController as reviewCtrl">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Save your list</div>
@@ -22,8 +21,7 @@
                         <label>List Title: </label>
                         <input type="text" ng-model="username" placeholder="Enter a name here">
                     </div>
-                    <form class="form-horizontal" name="reviewForm" ng-controller="ReviewController as reviewCtrl"
-                          ng-submit="reviewForm.$valid && reviewCtrl.addReview(review)">
+                    <form class="form-horizontal" name="reviewForm" ng-submit="reviewForm.$valid && reviewCtrl.addReview(review)">
                         <div class="col-md-3">
                             <label style="width:100px !important;" for="select-review-id">Review: </label>
                             <select style="width: 150px !important;" ng-model="reviewCtrl.review.stars"
@@ -53,25 +51,51 @@
         </div>
 
         <div class="col-md-6">
-            <!--<search-movie></search-movie>-->
             <div class="panel panel-default">
-                <div class="panel-heading">Search</div>
+                <div class="panel-heading">Static</div>
                 <div class="panel-body">
-                    <label>Search: </label>
-                    <input type="text" placeholder="Search movie title">
+                    This is just a drill.
+                    <div ng-repeat="product in products">
+                        <div ng-show="product.isAvailable">
+                            <div class="col-md-2">
+                                <label>Name: </label>
+                                <p>{{product.name | uppercase}} </p>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Price: </label>
+                                <p>{{product.price}}</p>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Description</label>
+                                <p>{{product.description}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
     </div> <!-- end row -->
 
-    <!--    <div class="welcome-message text-center">
-            <h2><b>LIST</b> {{username | uppercase}}</h2>
-        </div>-->
-
-
     <!-- Home Controller -->
     <div ng-controller="HomeController" ng-init="getMovies();">
+
+        <div class="col-md-12">
+            <!--<search-movie></search-movie>-->
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">Search</div>
+                <div class="panel-body text-center">
+                    <form name="searchForm" ng-submit="searchForm.$valid && search(searchTitle)" >
+                        <label>Search: </label>
+                        <input type="text" ng-model="searchTitle" placeholder="Search movie title" required>
+                        <input type="submit" value="Search"  />
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div ng-repeat="movie in movies">
             <div class="col-md-4">
                 <div class="box">
@@ -89,21 +113,6 @@
             </div>
         </div>
 
-        <!-- static data -->
-        <div class="col-md-4">
-            <div ng-repeat="product in products">
-                <div ng-show="product.isAvailable">
-                    <label>Name: </label>
-                    <p>{{product.name | uppercase}} </p>
-
-                    <label>Price: </label>
-                    <p>{{product.price}}</p>
-
-                    <label>Description</label>
-                    <p>{{product.description}}</p>
-                </div>
-            </div>
-        </div>
 
     </div> <!-- HomeController -->
 
