@@ -11,9 +11,9 @@ router.get('/:name?', function(req, res){
 	res.render('pages/index', {title: name});
 });
 
-router.get('*', function(req, res){
+/*router.get('*', function(req, res){
 	res.send("Bad Request");
-});
+});*/
 
 module.exports = router;
 

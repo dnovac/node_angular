@@ -6,81 +6,108 @@
     <script src="/javascripts/home.js"></script>
     <!-- Directives -->
     <script src="/javascripts/directives/searchPanelDirective.js"></script>
+    <script src="/highcharts/highcharts.js"></script>
+    <script src="/highcharts/highcharts-more.js"></script>
+    <script src="/highcharts/modules/exporting.js"></script>
 </head>
 
 <body>
 <div class="container" id="containerApp" ng-app="homeModule">
 
-    <div class="row" ng-controller="ReviewController as reviewCtrl">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Save your list <i class="fa fa-telegram fa-3x" aria-hidden="true"></i></div>
-                <div class="panel-body">
-                    <!-- rate -->
-                    <label>List Title: </label>
-                    <input type="text" ng-model="username" placeholder="Enter a name here">
+    <div ng-controller="HomeController" ng-init="getDataForHighChart();">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Save your list <i class="fa fa-telegram" aria-hidden="true"></i>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" name="reviewForm"
+                              ng-submit="reviewForm.$valid && saveList(review)">
 
-                    <form class="form-horizontal" name="reviewForm"
-                          ng-submit="reviewForm.$valid && reviewCtrl.addReview(review)">
+                            <!-- rate -->
+                            <div class="col-md-12">
+                                <label>List Title: </label>
+                                <input type="text" ng-model="review.title" placeholder="Enter a name here">
+                            </div>
 
-                        <label style="width:100px !important;" for="select-review-id">Review: </label>
-                        <select style="width: 150px !important;" ng-model="reviewCtrl.review.stars"
-                                class="form-control"
-                                id="select-review-id">
-                            <option>1 star</option>
-                            <option>2 stars</option>
-                            <option>3 stars</option>
-                            <option>4 stars</option>
-                            <option>5 stars</option>
-                        </select>
+                            <div class="col-md-12">
+                                <label for="select-review-id">Review: </label>
+                                <select ng-model="review.stars"
+                                        class="form-control"
+                                        id="select-review-id">
+                                    <option>1 star</option>
+                                    <option>2 stars</option>
+                                    <option>3 stars</option>
+                                    <option>4 stars</option>
+                                    <option>5 stars</option>
+                                </select>
+                            </div>
 
-                        <label>Email: </label>
-                        <input placeholder="Enter email" type="email" ng-model="reviewCtrl.review.author" required/>
+                            <div class="col-md-12">
+                                <label>Email: </label>
+                                <input placeholder="Enter email" type="email" ng-model="review.author" required/>
+                            </div>
 
-                        <p><b>Stars: {{reviewCtrl.review.stars}}</b></p>
-                        <p><cite>by: {{reviewCtrl.review.author}}</cite></p>
+                            <div class="col-md-6">
+                                <p><b>Stars: {{review.stars}}</b></p>
+                                <p><cite>by: {{review.author}}</cite></p>
+                            </div>
 
-                        <p>Email author is {{reviewForm.$valid}}</p>
-                        <input class="btn-success" type="submit" value="Submit"/>
-                    </form>
+                            <div class="col-md-12">
+                                <p>Email author is {{reviewForm.$valid}}</p>
+                                <input class="btn-success" type="submit" value="Submit"/>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Static
-                    <i class="fa fa-ravelry" aria-hidden="true"></i>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Static
+                        <i class="fa fa-ravelry" aria-hidden="true"></i>
+                    </div>
+                    <div class="panel-body">
+                        This is just a drill.
+                        <i class="fa fa-ravelry" aria-hidden="true"></i>
+                        <div ng-repeat="product in products">
+                            <div ng-show="product.isAvailable">
+                                <label>Name: </label>
+                                {{product.name | uppercase}}
+
+                                <label>Price: </label>
+                                {{product.price}}
+
+                                <label>Description</label>
+                                {{product.description}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    This is just a drill.
-                    <i class="fa fa-ravelry" aria-hidden="true"></i>
-                    <div ng-repeat="product in products">
-                        <div ng-show="product.isAvailable">
-                            <label>Name: </label>
-                            {{product.name | uppercase}}
+            </div>
+        </div> <!-- end row -->
 
-                            <label>Price: </label>
-                            {{product.price}}
-
-                            <label>Description</label>
-                            {{product.description}}
+        <!-- HIGHCHARTS row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">HighCharts</div>
+                    <div class="panel-body">
+                        <div id="hCharts-container">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div> <!-- end row -->
-
-    <!-- Home Controller -->
-    <div ng-controller="HomeController" ng-init="getMovies();">
 
         <div class="col-md-12">
             <!--<search-movie></search-movie>-->
-            <div class="panel panel-default" >
-                <div class="panel-heading text-center"><i style="padding-right: 20px;" class="fa fa-imdb fa-5x" aria-hidden="true"></i></div>
+            <div class="panel panel-default">
+                <div class="panel-heading text-center"><i style="padding-right: 20px;" class="fa fa-imdb fa-5x"
+                                                          aria-hidden="true"></i></div>
                 <div class="panel-body text-center">
                     <form name="searchForm" ng-submit="searchForm.$valid && search(searchTitle)">
                         <label>Search: </label>
@@ -91,24 +118,25 @@
             </div>
         </div>
 
-        <div ng-repeat="movie in movies">
-            <div class="col-md-4">
-                <div class="box">
-                    <div class="box-content">
-                        <h4 class="text-center">{{movie.Title | uppercase}}</h4>
-                        <hr/>
-                        <img align="middle" width="300" height="400" ng-src={{movie.Poster}} alt={{movie.Title}}></img>
-                        <p class="text-center"><b>{{movie.Genre}}</b></p>
-                        <br/>
-                        <p class="text-center"><i>{{movie.imdbID}}</i></p>
-                        <br/>
-                        <a href="#" class="btn btn-block btn-primary">See more</a>
+        <div class="col-md-12">
+            <div ng-repeat="movie in movies | searchFor: searchTitle">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-content">
+                            <h4 class="text-center">{{movie.Title | uppercase}}</h4>
+                            <hr/>
+                            <img width="300" height="400" ng-src={{movie.Poster}}
+                                 alt={{movie.Title}}></img>
+                            <p class="text-center"><b>{{movie.Genre}}</b></p>
+                            <br/>
+                            <p class="text-center"><i>{{movie.imdbID}}</i></p>
+                            <br/>
+                            <a href="#" class="btn btn-block btn-primary">See more</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div> <!-- HomeController -->
 
     <!-- footer -->

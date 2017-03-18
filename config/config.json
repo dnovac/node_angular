@@ -1,0 +1,16 @@
+{
+  "couchbase": {
+    "server": {
+      "host": "",
+      "port": 8091
+    },
+    "bucket": "",
+    "bucket_events": "",
+    "password": "",
+    "connectionTimeout": 50000,
+    "operationTimeout": 25000,
+    "cachefile": "",
+    "ttl": 86400,
+    "prefix": "sess"
+  }
+}
